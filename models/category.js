@@ -12,4 +12,4 @@ CategorySchema.virtual("url").get(function() {
 });
 
 // Export model
-module.exports = mongoose.model(CategorySchema);
+module.exports = mongoose.model("Category", CategorySchema);
