@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ConstructorSchema = new Schema({
-    name: String,
-    address: String
+    name: {type: String, required: true},
+    address: {type: String, required: true}
 });
 
 ConstructorSchema.virtual("url").get(function() {
