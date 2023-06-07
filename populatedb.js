@@ -28,8 +28,8 @@ async function main() {
 
 async function categoryCreate(name, description) {
     const category = new Category({
-        name: name, 
-        description: description 
+        name: name,
+        description: description,
     });
     await category.save();
     categories.push(category);
@@ -39,14 +39,21 @@ async function categoryCreate(name, description) {
 async function manufacturerCreate(name, address) {
     const manufacturer = new Manufacturer({
         name: name,
-        address: address
+        address: address,
     });
     await manufacturer.save();
     manufacturers.push(manufacturer);
     console.log(`Added manufacturer: ${name}`);
 }
 
-async function itemCreate(name, description, price, number_in_stock, category, manufacturer) {
+async function itemCreate(
+    name,
+    description,
+    price,
+    number_in_stock,
+    category,
+    manufacturer
+) {
     const item = new Item({
         name: name,
         description: description,
@@ -64,10 +71,16 @@ async function createCategories() {
     console.log("Adding categories");
     await Promise.all([
         categoryCreate("Keycaps", "Covers placed over the keyswitch."),
-        categoryCreate("Switches", "Mechanisms under the keycaps that register key presses."),
+        categoryCreate(
+            "Switches",
+            "Mechanisms under the keycaps that register key presses."
+        ),
         categoryCreate("Cases", "Keyboard cases"),
         categoryCreate("PCB", "Keyboard PCBs"),
-        categoryCreate("Full Kits", "Packages of keycaps, switches, cases and PCBs to facilitate the access to mechanical keyboards.")
+        categoryCreate(
+            "Full Kits",
+            "Packages of keycaps, switches, cases and PCBs to facilitate the access to mechanical keyboards."
+        ),
     ]);
 }
 
@@ -80,7 +93,7 @@ async function createManufacturers() {
         manufacturerCreate("Cherry MX", "Germany"),
         manufacturerCreate("EPBT", "China"),
         manufacturerCreate("Tofu", "China"),
-        manufacturerCreate("KBDFans", "China")
+        manufacturerCreate("KBDFans", "China"),
     ]);
 }
 
@@ -150,6 +163,6 @@ async function createItems() {
             178,
             categories[1],
             manufacturers[2]
-        )
+        ),
     ]);
 }
