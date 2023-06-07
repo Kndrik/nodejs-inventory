@@ -1,30 +1,32 @@
 const express = require("express");
 const router = express.Router();
 
+const category_controller = require("../controllers/categoryController");
+
 /// CATEGORY ROUTES ///
 
 // GET categories
-router.get("/", (req, res, next) => {});
+router.get("/", category_controller.category_list);
 
 // GET request for creating category
-router.get("/:id/create", (req, res, next) => {});
+router.get("/:id/create", category_controller.category_create_get);
 
 // POST request for creating category
-router.post("/:id/create", (req, res, next) => {});
+router.post("/:id/create", category_controller.category_create_post);
 
 // GET request for updating category
-router.get("/:id/update", (req, res, next) => {});
+router.get("/:id/update", category_controller.category_update_get);
 
 // POST request for updating category
-router.post("/:id/update", (req, res, next) => {});
+router.post("/:id/update", category_controller.category_update_post);
 
 // GET request for deleting category
-router.get("/:id/delete", (req, res, next) => {});
+router.get("/:id/delete", category_controller.category_delete_get);
 
 // POST request for deleting category
-router.post("/:id/delete", (req, res, next) => {});
+router.post("/:id/delete", category_controller.category_delete_post);
 
 // GET request for a category
-router.get("/:id", (req, res, next) => {});
+router.get("/:id", category_controller.category_detail);
 
 module.exports = router;
