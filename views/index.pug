@@ -2,4 +2,11 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  hr
+
+  p The inventory contains the following amount of resources:
+
+  ul
+    li #[strong Items:] !{item_count}
+    li #[strong Categories:] !{category_count}
+    li #[strong Manufacturers:] !{manufacturer_count}
