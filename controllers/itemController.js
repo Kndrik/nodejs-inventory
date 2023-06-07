@@ -1,6 +1,18 @@
-exports.item_list = (req, res, next) => {
-  res.send("Not implemented yet. item LIST");
-};
+const Item = require("../models/item");
+
+const asyncHandler = require("express-async-handler");
+
+exports.item_list = asyncHandler(async (req, res, next) => {
+  const itemList = await Item.find()
+    .sort({ name: 1 })
+    .populate("manufacturer")
+    .exec();
+
+  res.render("item_list", {
+    title: "All items",
+    item_list: itemList,
+  });
+});
 
 exports.item_create_get = (req, res, next) => {
   res.send(`Not implemented yet. item CREATE FORM`);

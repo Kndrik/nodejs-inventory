@@ -1,0 +1,12 @@
+extends layout 
+
+block content
+  h1= title
+  hr
+
+  ul
+    each item in item_list
+      li
+        a.link-primary(href=item.url) #{item.name}
+        |  - 
+        a.link-opacity-50.link-underline.link-underline-opacity-50(href=item.manufacturer.url) #{item.manufacturer.name}
