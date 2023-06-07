@@ -3,11 +3,11 @@ exports.item_list = (req, res, next) => {
 };
 
 exports.item_create_get = (req, res, next) => {
-  res.send(`Not implemented yet. item CREATE FORM: ${req.params.id}`);
+  res.send(`Not implemented yet. item CREATE FORM`);
 };
 
 exports.item_create_post = (req, res, next) => {
-  res.send(`Not implemented yet. item CREATE POST: ${req.params.id}`);
+  res.send(`Not implemented yet. item CREATE POST`);
 };
 
 exports.item_update_get = (req, res, next) => {

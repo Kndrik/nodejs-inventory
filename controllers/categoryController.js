@@ -3,11 +3,11 @@ exports.category_list = (req, res, next) => {
 };
 
 exports.category_create_get = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY CREATE FORM: ${req.params.id}`);
+  res.send(`Not implemented yet. CATEGORY CREATE FORM`);
 };
 
 exports.category_create_post = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY CREATE POST: ${req.params.id}`);
+  res.send(`Not implemented yet. CATEGORY CREATE POST`);
 };
 
 exports.category_update_get = (req, res, next) => {

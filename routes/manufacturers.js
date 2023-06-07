@@ -9,10 +9,10 @@ const manufacturer_controller = require("../controllers/manufacturerController")
 router.get("/", manufacturer_controller.manufacturer_list);
 
 // GET request for creating manufacturer
-router.get("/:id/create", manufacturer_controller.manufacturer_create_get);
+router.get("/create", manufacturer_controller.manufacturer_create_get);
 
 // POST request for creating manufacturer
-router.post("/:id/create", manufacturer_controller.manufacturer_create_post);
+router.post("/create", manufacturer_controller.manufacturer_create_post);
 
 // GET request for updating manufacturer
 router.get("/:id/update", manufacturer_controller.manufacturer_update_get);

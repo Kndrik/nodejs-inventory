@@ -9,10 +9,10 @@ const item_controller = require("../controllers/itemController");
 router.get("/", item_controller.item_list);
 
 // GET request for creating item
-router.get("/:id/create", item_controller.item_create_get);
+router.get("/create", item_controller.item_create_get);
 
 // POST request for creating item
-router.post("/:id/create", item_controller.item_create_post);
+router.post("/create", item_controller.item_create_post);
 
 // GET request for updating item
 router.get("/:id/update", item_controller.item_update_get);

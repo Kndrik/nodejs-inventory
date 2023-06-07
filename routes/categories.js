@@ -9,10 +9,10 @@ const category_controller = require("../controllers/categoryController");
 router.get("/", category_controller.category_list);
 
 // GET request for creating category
-router.get("/:id/create", category_controller.category_create_get);
+router.get("/create", category_controller.category_create_get);
 
 // POST request for creating category
-router.post("/:id/create", category_controller.category_create_post);
+router.post("/create", category_controller.category_create_post);
 
 // GET request for updating category
 router.get("/:id/update", category_controller.category_update_get);

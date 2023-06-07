@@ -3,11 +3,11 @@ exports.manufacturer_list = (req, res, next) => {
 };
 
 exports.manufacturer_create_get = (req, res, next) => {
-  res.send(`Not implemented yet. manufacturer CREATE FORM: ${req.params.id}`);
+  res.send(`Not implemented yet. manufacturer CREATE FORM`);
 };
 
 exports.manufacturer_create_post = (req, res, next) => {
-  res.send(`Not implemented yet. manufacturer CREATE POST: ${req.params.id}`);
+  res.send(`Not implemented yet. manufacturer CREATE POST`);
 };
 
 exports.manufacturer_update_get = (req, res, next) => {
