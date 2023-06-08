@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 #{title}: #{manufacturer.name}
+  hr
+
+  p #[strong Address:] #{manufacturer.address}
+
+  h3 Products from #{manufacturer.name}
+
+  if item_list.length
+    ul
+      each item in item_list
+        li
+          a(href=item.url) #{item.name}
+  else
+    p.text-danger There is currently no item from this manufacturer

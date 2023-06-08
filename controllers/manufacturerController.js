@@ -1,4 +1,5 @@
 const Manufacturer = require("../models/manufacturer");
+const Item = require("../models/item");
 
 const asyncHandler = require("express-async-handler");
 
@@ -35,6 +36,15 @@ exports.manufacturer_delete_post = (req, res, next) => {
   res.send(`Not implemented yet. manufacturer DELETE POST: ${req.params.id}`);
 };
 
-exports.manufacturer_detail = (req, res, next) => {
-  res.send(`Not implemented yet. manufacturer DETAILS: ${req.params.id}`);
-};
+exports.manufacturer_detail = asyncHandler(async (req, res, next) => {
+  const [manufacturer, itemsByManufacturer] = await Promise.all([
+    Manufacturer.findById(req.params.id).exec(),
+    Item.find({ manufacturer: req.params.id }).sort({ category: 1 }).exec(),
+  ]);
+
+  res.render("manufacturer_detail", {
+    title: "Manufacturer",
+    manufacturer: manufacturer,
+    item_list: itemsByManufacturer,
+  });
+});
