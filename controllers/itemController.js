@@ -38,6 +38,13 @@ exports.item_delete_post = (req, res, next) => {
   res.send(`Not implemented yet. item DELETE POST: ${req.params.id}`);
 };
 
-exports.item_detail = (req, res, next) => {
-  res.send(`Not implemented yet. item DETAILS: ${req.params.id}`);
-};
+exports.item_detail = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id)
+    .populate("category manufacturer")
+    .exec();
+
+  res.render("item_detail", {
+    title: "Item details",
+    item: item,
+  });
+});

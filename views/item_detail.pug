@@ -1,0 +1,24 @@
+extends layout 
+
+block content
+  h1= title
+  hr
+
+  h2= item.name
+  p= item.description
+  div Category: 
+    | 
+    a(href=item.category.url) #{item.category.name}
+  div Manufacturer: 
+    |
+    a(href=item.manufacturer.url) #{item.manufacturer.name}
+  p 
+  div #[strong Availability]
+  if item.number_in_stock
+    div
+      span.text-success #{item.number_in_stock} in stock 
+      span (#{item.price}$)
+  else
+    div 
+      span.text-danger #{item.number_in_stock} in stock 
+      span (#{item.price}$)
