@@ -14,3 +14,7 @@ block content
           a(href=item.url) #{item.name}
   else
     p.text-danger There is currently no item in this category.
+
+  hr
+  a.btn.btn-primary(href=`${category.url}/update` role="button" style="margin-right: 10px;") Update
+  a.btn.btn-danger(href=`${category.url}/delete` role="button") Delete

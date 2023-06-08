@@ -1,4 +1,6 @@
 const Item = require("../models/item");
+const Category = require("../models/category");
+const Manufacturer = require("../models/manufacturer");
 
 const asyncHandler = require("express-async-handler");
 
@@ -14,9 +16,18 @@ exports.item_list = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.item_create_get = (req, res, next) => {
-  res.send(`Not implemented yet. item CREATE FORM`);
-};
+exports.item_create_get = asyncHandler(async (req, res, next) => {
+  const [allCategories, allManufacturers] = await Promise.all([
+    Category.find({}, "name").exec(),
+    Manufacturer.find({}, "name").exec(),
+  ]);
+
+  res.render("item_form", {
+    title: "New Item",
+    category_list: allCategories,
+    manufacturer_list: allManufacturers,
+  });
+});
 
 exports.item_create_post = (req, res, next) => {
   res.send(`Not implemented yet. item CREATE POST`);

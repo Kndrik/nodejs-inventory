@@ -22,3 +22,7 @@ block content
     div 
       span.text-danger #{item.number_in_stock} in stock 
       span (#{item.price}$)
+  
+  hr
+  a.btn.btn-primary(href=`${item.url}/update` role="button" style="margin-right: 10px;") Update
+  a.btn.btn-danger(href=`${item.url}/delete` role="button") Delete
