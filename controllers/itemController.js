@@ -3,7 +3,7 @@ const Item = require("../models/item");
 const asyncHandler = require("express-async-handler");
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-  const itemList = await Item.find()
+  const itemList = await Item.find({}, "name manufacturer")
     .sort({ name: 1 })
     .populate("manufacturer")
     .exec();

@@ -1,6 +1,15 @@
-exports.category_list = (req, res, next) => {
-  res.send("Not implemented yet. CATEGORY LIST");
-};
+const Category = require("../models/category");
+
+const asyncHandler = require("express-async-handler");
+
+exports.category_list = asyncHandler(async (req, res, next) => {
+  const categories = await Category.find({}, "name").exec();
+
+  res.render("category_list", {
+    title: "All categories",
+    category_list: categories,
+  });
+});
 
 exports.category_create_get = (req, res, next) => {
   res.send(`Not implemented yet. CATEGORY CREATE FORM`);
