@@ -4,37 +4,43 @@ block content
   h1= title
   hr
 
+  if errors 
+  ul
+    for error in errors
+        li.text-danger!= error.msg
+
   form(method="POST" action="")
     div.form-group.mb-1
       label.form-label(for="name") Name:
-      input.form-control(type="text" id="name" name="name" required=true)
+      input.form-control(type="text" id="name" name="name" required=true value=(undefined===item ? '' : item.name))
     div.form-group.mb-1
       label.form-label(for="description") Description: 
-      textarea.form-control(type="textarea" id="description" name="description" required=true)
+      textarea.form-control(type="textarea" id="description" name="description" required=true value=(undefined===item ? '' : item.description))
     div.form-group.mb-1
       label.form-label(for="price") Price:
       div.input-group
-        input.form-control(type="number" id="price" name="price" required=true)
+        input.form-control(type="number" id="price" name="price" required=true value=(undefined===item ? '' : item.price))
         span.input-group-text(id="price-addon") $
     div.form-group.mb-1
-      label.form-label(for="in-stock") Number in stock:
-      input.form-control(type="number" id="in-stock" name="in-stock" value=0 require=true)
+      label.form-label(for="in_stock") Number in stock:
+      input.form-control(type="number" id="in_stock" name="in_stock" require=true value=(undefined===item ? '' : item.number_in_stock))
     div.form-group.mb-1
       label.form-label(for="category") Category:
       select.form-control.form-select(id="category" name="category" required=true)
         - category_list.sort(function (a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
           for category in category_list
-            option(value=category.name) #{category.name}
+            if item
+              option(value=category._id selected=(item.category.toString()===category._id.toString() ? 'selected' : false)) #{category.name}
+            else
+              option(value=category._id) #{category.name}
     div.form-group.mb-1
       label.form-label(for="manufacturer") Manufacturer:
       select.form-control.form-select(id="manufacturer" name="manufacturer" required=true)
         - manufacturer_list.sort(function (a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
           for manufacturer in manufacturer_list
-            option(value=manufacturer.name) #{manufacturer.name}
+            if item
+              option(value=manufacturer._id selected=(item.manufacturer.toString()===manufacturer._id.toString() ? "selected" : false)) #{manufacturer.name}
+            else
+              option(value=manufacturer._id) #{manufacturer.name}
     
     button.btn.btn-primary.mt-3(type="submit") Submit
-
-    if errors 
-      ul
-        for error in errors
-            li.text-danger!= error.msg
