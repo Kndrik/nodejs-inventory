@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Item = require("../models/item");
 
 const asyncHandler = require("express-async-handler");
 
@@ -35,6 +36,15 @@ exports.category_delete_post = (req, res, next) => {
   res.send(`Not implemented yet. CATEGORY DELETE POST: ${req.params.id}`);
 };
 
-exports.category_detail = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY DETAILS: ${req.params.id}`);
-};
+exports.category_detail = asyncHandler(async (req, res, next) => {
+  const [category, itemsInCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ category: req.params.id }, "name").exec(),
+  ]);
+
+  res.render("category_detail", {
+    title: "Category details",
+    category: category,
+    item_list: itemsInCategory,
+  });
+});
