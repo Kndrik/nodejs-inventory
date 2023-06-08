@@ -1,6 +1,15 @@
-exports.manufacturer_list = (req, res, next) => {
-  res.send("Not implemented yet. manufacturer LIST");
-};
+const Manufacturer = require("../models/manufacturer");
+
+const asyncHandler = require("express-async-handler");
+
+exports.manufacturer_list = asyncHandler(async (req, res, next) => {
+  const manufacturers = await Manufacturer.find({}, "name").exec();
+
+  res.render("manufacturer_list", {
+    title: "All manufacturers",
+    manufacturer_list: manufacturers,
+  });
+});
 
 exports.manufacturer_create_get = (req, res, next) => {
   res.send(`Not implemented yet. manufacturer CREATE FORM`);

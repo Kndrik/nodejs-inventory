@@ -1,0 +1,10 @@
+extends layout 
+
+block content
+  h1= title
+  hr
+
+  ul
+    each manufacturer in manufacturer_list
+      li
+        a.link-primary(href=manufacturer.url) #{manufacturer.name}
