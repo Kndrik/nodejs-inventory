@@ -12,8 +12,12 @@ block content
   form(method="POST" action="")
     div.form-group.mb-1
       label.form-label(for="name") Name: 
-      input.form-control(type="text" id="name" name="name" required=true)
+      input.form-control(type="text" id="name" name="name" required=true value=(undefined===category ? '' : category.name))
     div.form-group.mb-1
       label.form-label(for="description") Description:
-      textarea.form-control(type="textarea" id="description" name="description" required=true)
+      if category
+        textarea.form-control(type="textarea" id="description" name="description" required=true) #{category.description}
+      else
+        textarea.form-control(type="textarea" id="description" name="description" required=true)
+
     button.mt-3.btn.btn-primary(type="submit") Submit
