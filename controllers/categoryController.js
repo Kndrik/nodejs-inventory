@@ -1,3 +1,4 @@
+const { body, validationResult } = require("express-validator");
 const Category = require("../models/category");
 const Item = require("../models/item");
 
@@ -13,12 +14,58 @@ exports.category_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_create_get = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY CREATE FORM`);
+  res.render("category_form", {
+    title: "New category",
+  });
 };
 
-exports.category_create_post = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY CREATE POST`);
-};
+exports.category_create_post = [
+  body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+  body("description", "Must contain a description.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    req.newCategory = category;
+
+    if (!errors.isEmpty()) {
+      // There are errors
+      // Re render form
+      res.render("category_form", {
+        title: "New category",
+        category: category,
+        errors: errors.array(),
+      });
+    } else {
+      next();
+    }
+  }),
+  asyncHandler(async (req, res, next) => {
+    // Check if category already exists
+    const existingCategory = await Category.findOne({
+      name: req.body.name,
+    }).exec();
+
+    if (existingCategory !== null) {
+      // Category already exists
+      res.render("category_form", {
+        title: "New category",
+        category: req.newCategory,
+        errors: [{ msg: "A category with this name already exists." }],
+      });
+    } else {
+      await req.newCategory.save();
+      res.redirect(req.newCategory.url);
+    }
+  }),
+];
 
 exports.category_update_get = (req, res, next) => {
   res.send(`Not implemented yet. CATEGORY UPDATE FORM: ${req.params.id}`);

@@ -5,8 +5,8 @@ block content
   hr
 
   if errors 
-  ul
-    for error in errors
+    ul
+      each error in errors
         li.text-danger!= error.msg
 
   form(method="POST" action="")

@@ -1,0 +1,19 @@
+extends layout
+
+block content 
+  h1= title
+  hr
+
+  if errors
+    ul
+      each error in errors
+        li.text-danger!= error.msg
+
+  form(method="POST" action="")
+    div.form-group.mb-1
+      label.form-label(for="name") Name: 
+      input.form-control(type="text" id="name" name="name" required=true)
+    div.form-group.mb-1
+      label.form-label(for="description") Description:
+      textarea.form-control(type="textarea" id="description" name="description" required=true)
+    button.mt-3.btn.btn-primary(type="submit") Submit
