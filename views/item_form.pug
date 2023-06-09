@@ -15,11 +15,15 @@ block content
       input.form-control(type="text" id="name" name="name" required=true value=(undefined===item ? '' : item.name))
     div.form-group.mb-1
       label.form-label(for="description") Description: 
-      textarea.form-control(type="textarea" id="description" name="description" required=true value=(undefined===item ? '' : item.description))
+      if item
+        textarea.form-control(type="textarea" id="description" name="description" required=true) #{item.description}
+      else
+        textarea.form-control(type="textarea" id="description" name="description" required=true)
+
     div.form-group.mb-1
       label.form-label(for="price") Price:
       div.input-group
-        input.form-control(type="number" id="price" name="price" required=true value=(undefined===item ? '' : item.price))
+        input.form-control(type="number" id="price" name="price" required=true value=(undefined===item ? '' : Number(item.price)))
         span.input-group-text(id="price-addon") $
     div.form-group.mb-1
       label.form-label(for="in_stock") Number in stock:
