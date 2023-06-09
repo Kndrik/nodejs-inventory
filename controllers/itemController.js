@@ -147,13 +147,19 @@ exports.item_update_post = [
   }),
 ];
 
-exports.item_delete_get = (req, res, next) => {
-  res.send(`Not implemented yet. item DELETE FORM: ${req.params.id}`);
-};
+exports.item_delete_get = asyncHandler(async (req, res, next) => {
+  const item = await Item.findById(req.params.id);
 
-exports.item_delete_post = (req, res, next) => {
-  res.send(`Not implemented yet. item DELETE POST: ${req.params.id}`);
-};
+  res.render("item_delete", {
+    title: "Delete item",
+    item: item,
+  });
+});
+
+exports.item_delete_post = asyncHandler(async (req, res, next) => {
+  await Item.findByIdAndRemove(req.params.id);
+  res.redirect("/inventory/items");
+});
 
 exports.item_detail = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id)

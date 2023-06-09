@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 #{title}: #{item.name}
+  hr
+
+  p Do you really want to delete the item #{item.name}?
+  form(method="POST" action="")
+    div.form-group
+      button.btn.btn-danger(type="submit") Delete
