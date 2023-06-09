@@ -128,13 +128,38 @@ exports.category_update_post = [
   }),
 ];
 
-exports.category_delete_get = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY DELETE FORM: ${req.params.id}`);
-};
+exports.category_delete_get = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id, "name");
+  res.render("category_delete", {
+    title: "Delete category",
+    category: category,
+  });
+});
 
-exports.category_delete_post = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY DELETE POST: ${req.params.id}`);
-};
+exports.category_delete_post = asyncHandler(async (req, res, next) => {
+  const linkedItems = await Item.find(
+    { category: req.params.id },
+    "name"
+  ).exec();
+
+  if (linkedItems.length > 0) {
+    const category = await Category.findById(req.params.id);
+    // There are linked items
+    res.render("category_delete", {
+      title: "Delete category",
+      errors: [
+        {
+          msg: "Please delete these items before trying to delete this category",
+        },
+      ],
+      category: category,
+      item_list: linkedItems,
+    });
+  } else {
+    await Category.findByIdAndDelete(req.params.id);
+    res.redirect("/inventory/categories");
+  }
+});
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
   const [category, itemsInCategory] = await Promise.all([
