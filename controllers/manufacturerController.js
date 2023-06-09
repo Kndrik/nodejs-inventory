@@ -125,13 +125,38 @@ exports.manufacturer_update_post = [
   }),
 ];
 
-exports.manufacturer_delete_get = (req, res, next) => {
-  res.send(`Not implemented yet. manufacturer DELETE FORM: ${req.params.id}`);
-};
+exports.manufacturer_delete_get = asyncHandler(async (req, res, next) => {
+  const manufacturer = await Manufacturer.findById(req.params.id).exec();
 
-exports.manufacturer_delete_post = (req, res, next) => {
-  res.send(`Not implemented yet. manufacturer DELETE POST: ${req.params.id}`);
-};
+  res.render("manufacturer_delete", {
+    title: "Delete manufacturer",
+    manufacturer: manufacturer,
+  });
+});
+
+exports.manufacturer_delete_post = asyncHandler(async (req, res, next) => {
+  const linkedItems = await Item.find(
+    { manufacturer: req.params.id },
+    "name"
+  ).exec();
+
+  if (linkedItems.length > 0) {
+    const manufacturer = await Manufacturer.findById(req.params.id);
+    res.render("manufacturer_delete", {
+      title: "Delete manufacturer",
+      manufacturer: manufacturer,
+      errors: [
+        {
+          msg: "Please delete these items before trying to delete this manufacturer",
+        },
+      ],
+      item_list: linkedItems,
+    });
+  } else {
+    await Manufacturer.findByIdAndRemove(req.params.id);
+    res.redirect("/inventory/manufacturers");
+  }
+});
 
 exports.manufacturer_detail = asyncHandler(async (req, res, next) => {
   const [manufacturer, itemsByManufacturer] = await Promise.all([

@@ -156,7 +156,7 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
       item_list: linkedItems,
     });
   } else {
-    await Category.findByIdAndDelete(req.params.id);
+    await Category.findByIdAndRemove(req.params.id);
     res.redirect("/inventory/categories");
   }
 });
