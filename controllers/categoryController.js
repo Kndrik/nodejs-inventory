@@ -67,13 +67,66 @@ exports.category_create_post = [
   }),
 ];
 
-exports.category_update_get = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY UPDATE FORM: ${req.params.id}`);
-};
+exports.category_update_get = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id);
 
-exports.category_update_post = (req, res, next) => {
-  res.send(`Not implemented yet. CATEGORY UPDATE POST: ${req.param.id}`);
-};
+  res.render("category_form", {
+    title: "Update category",
+    category: category,
+  });
+});
+
+exports.category_update_post = [
+  body("name", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+  body("description", "Must contain a description.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    });
+
+    req.newCategory = category;
+
+    if (!errors.isEmpty()) {
+      // There are errors
+      // Re render form
+      res.render("category_form", {
+        title: "New category",
+        category: category,
+        errors: errors.array(),
+      });
+    } else {
+      next();
+    }
+  }),
+  asyncHandler(async (req, res, next) => {
+    // Check if category already exists
+    const existingCategory = await Category.findOne({
+      name: req.body.name,
+    }).exec();
+
+    if (
+      existingCategory !== null &&
+      existingCategory._id.toString() !== req.params.id.toString()
+    ) {
+      // Category already exists
+      res.render("category_form", {
+        title: "New category",
+        category: req.newCategory,
+        errors: [{ msg: "A category with this name already exists." }],
+      });
+    } else {
+      await Category.findByIdAndUpdate(req.params.id, req.newCategory);
+      res.redirect(req.newCategory.url);
+    }
+  }),
+];
 
 exports.category_delete_get = (req, res, next) => {
   res.send(`Not implemented yet. CATEGORY DELETE FORM: ${req.params.id}`);
